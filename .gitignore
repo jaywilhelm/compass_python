@@ -1,4 +1,6 @@
 node_modules/
+*.csv
+*.pkl
 .vscode/
 __pycache__
 db_config.ini
