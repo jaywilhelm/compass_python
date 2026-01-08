@@ -1,3 +1,11 @@
 node_modules/
 .vscode/
 __pycache__
+db_config.ini
+api_key.txt
+*.kmz
+*.kml
+D4_OHGO.txt
+D6_OHGO.txt
+D2_OHGO.txt
+D7_OHGO.txt

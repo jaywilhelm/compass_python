@@ -11,9 +11,23 @@ from grpc_interceptor.client import ClientInterceptor, ClientCallDetails
 from compassiot.gateway.v1.gateway_pb2 import AuthenticateRequest
 from compassiot.gateway.v1.gateway_pb2_grpc import ServiceStub
 
+from pathlib import Path
+
+def load_api_key(path: str = "api_key.txt") -> str:
+    """
+    Load an API key from a text file and return it as a string.
+    Strips surrounding whitespace/newlines.
+    """
+    key = Path(path).read_text(encoding="utf-8").strip()
+
+    if not key:
+        raise ValueError(f"{path} is empty")
+
+    return key
 
 HOST = "api.compassiot.cloud"
-SECRET = "__INSERT_YOUR_COMPASSIOT_API_KEY__"
+SECRET = load_api_key("api_key.txt")
+
 TIMEOUT_SEC = 60 * 25  # used by retryStream
 SHORT_TIMEOUT_SEC = 60 * 5
 
