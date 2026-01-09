@@ -179,3 +179,23 @@ def drop_table(conn,table_name) -> dict:
         "action": "dropped",
         "reason": "forced"
     }
+
+def metadata_filename_exists(
+    conn,
+    filename: str,
+    table_name: str = "import_metadata",
+) -> bool:
+    """
+    Returns True if filename already exists in the metadata table.
+    """
+    cur = conn.cursor()
+    cur.execute(
+        f"""
+        SELECT 1
+        FROM `{table_name}`
+        WHERE filename = %s
+        LIMIT 1
+        """,
+        (filename,),
+    )
+    return cur.fetchone() is not None

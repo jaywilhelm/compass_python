@@ -20,7 +20,7 @@ def get_db_connection(config_path="db_config.ini"):
         password=db["password"],
         autocommit=False
     )
-conn = get_db_connection()
+# conn = get_db_connection()
 
 ####
 #
@@ -39,6 +39,9 @@ def ImportDataSet(conn,
                 district: int,
                 source: str):
 
+    if metadata_filename_exists(conn, csvfile):
+        raise ValueError(f"Metadata for filename '{csvfile}' already exists")
+
     metadata_id = insert_metadata(
         conn,
         district=district,
@@ -54,6 +57,8 @@ def ImportDataSet(conn,
     res = verify_csv_uploaded(conn, csvfile, table_name="vehicle_telemetry")
     print(res)
 
+
+conn = get_db_connection()
 ImportDataSet(conn,
                 csvfile="July_2025_SB_D7_OHGO_TEST.csv",
                 linestring=load_linestring_from_textfile("D7_OHGO.txt"),
